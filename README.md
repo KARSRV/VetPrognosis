@@ -10,7 +10,7 @@ Welcome to the **Animal Disease Prediction Application**! This Django-based web 
 
 ### Cow Disease Prediction
 - **Symptom Checker**: Predict potential diseases in cows by selecting symptoms from a comprehensive list.
-- **Voting Classifier**: Utilizes a voting classifier that combines multiple machine learning algorithms like RandomForest,Decision_Tree and GradientBoost algorithms for improved accuracy.
+- **Voting Classifier**: Utilizes a voting classifier that combines multiple machine learning algorithms RandomForest,Decision_Tree and GradientBoost algorithms for improved accuracy.
 
 ### Dog Disease Diagnosis
 - **Skin Disease Diagnosis**: Upload images of dogs to diagnose skin diseases using a trained Convolutional Neural Network (CNN) model.
