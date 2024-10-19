@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload Image</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #bc13fe;
+        --primary-dark: #39254d;
+        --secondary: #666666;
+        --accent: #ff00ff;
+        --background: #000000;
+        --surface: #111111;
+        --surface-dark: #0a0a0a;
+        --text: #ffffff;
+        --text-secondary: #888888;
+        --neon-glow: 0 0 10px #bc13fe, 0 0 20px #39254d,
+          0 0 30px rgba(0, 255, 136, 0.1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: var(--background);
+        color: var(--text);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        flex-direction: column;
+      }
+
+      h2 {
+        color: var(--primary);
+        text-align: center;
+        text-shadow: var(--neon-glow);
+        margin-bottom: 20px;
+      }
+
+      form {
+        background-color: var(--surface);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        width: 400px;
+        text-align: center;
+      }
+
+      label {
+        color: var(--text);
+        font-size: 16px;
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      input[type="file"] {
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid var(--primary);
+        background-color: var(--surface-dark);
+        color: var(--text-secondary);
+        width: 100%;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      button {
+        background-color: var(--primary);
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+      }
+
+      button:hover {
+        background-color: var(--primary-dark);
+        color: white;
+        transform: scale(1.05);
+      }
+
+      .background-animation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+        background: linear-gradient(
+          45deg,
+          rgba(0, 255, 136, 0.05),
+          rgba(255, 0, 255, 0.05),
+          rgba(0, 136, 255, 0.05)
+        );
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+      }
+
+      .navbar {
+        background: rgba(0, 0, 0, 0.9);
+        border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+        position: fixed;
+        top: 0;
+        z-index: 50;
+        width: 100%;
+        backdrop-filter: blur(12px);
+        padding: 1rem;
+      }
+
+      .nav-container {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        z-index: 2;
+      }
+
+      .logo-text {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary);
+        text-shadow: var(--neon-glow);
+        text-decoration: none;
+      }
+      .anon-text {
+        margin-top: 100px;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        z-index: 2;
+      }
+
+      .nav-link {
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        position: relative;
+      }
+
+      .nav-link:hover {
+        color: var(--primary);
+        text-shadow: var(--neon-glow);
+      }
+
+      @keyframes gradient {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      footer {
+        background: rgba(0, 0, 0, 0.9);
+        padding: 1rem 0;
+        text-align: center;
+        color: var(--text-secondary);
+        border-top: 1px solid rgba(0, 255, 136, 0.1);
+        z-index: 50;
+      }
+
+      footer a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      footer a:hover {
+        text-shadow: var(--neon-glow);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background-animation"></div>
+
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="{% url 'home' %}">
+          <span class="logo-text">VetPrognosis</span>
+        </a>
+        <div class="nav-links">
+          <a href="#about" class="nav-link">About</a>
+          <a href="#services" class="nav-link">Services</a>
+          <a href="#contact" class="nav-link">Contact</a>
+          <a href="#help" class="nav-link">Help Center</a>
+        </div>
+      </div>
+    </nav>
+
+    <h2>Upload Image to Predict Skin Disease</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <label for="image">Select an image:</label>
+      <input type="file" name="image" id="image" accept="image/*" required />
+      <button type="submit">Upload and Predict</button>
+    </form>
+
+    <footer>
+      <p>&copy; VetPrognosis</p>
+      <p>Developed by <a href="#">Anon</a></p>
+    </footer>
+  </body>
+</html>

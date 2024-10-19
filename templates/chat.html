@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RAG Chatbot</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #bc13fe;
+        --primary-dark: #39254d;
+        --secondary: #666666;
+        --accent: #ff00ff;
+        --background: #000000;
+        --surface: #111111;
+        --surface-dark: #0a0a0a;
+        --text: #ffffff;
+        --text-secondary: #888888;
+        --input-background: #222222;
+        --input-border: #444444;
+        --input-hover: #555555;
+        --neon-glow: 0 0 10px #bc13fe, 0 0 20px #39254d,
+          0 0 30px rgba(0, 255, 136, 0.1);
+        --neon-glow-accent: 0 0 10px rgba(255, 0, 255, 0.5),
+          0 0 20px rgba(255, 0, 255, 0.3), 0 0 30px rgba(255, 0, 255, 0.1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: var(--background);
+        color: var(--text);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .background-animation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 0;
+        background: linear-gradient(
+          45deg,
+          rgba(0, 255, 136, 0.05),
+          rgba(255, 0, 255, 0.05),
+          rgba(0, 136, 255, 0.05)
+        );
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+      }
+
+      @keyframes gradient {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      .glow-orb {
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(100px);
+        opacity: 0.15;
+        z-index: 1;
+      }
+
+      .orb-1 {
+        width: 300px;
+        height: 300px;
+        background: var(--primary);
+        top: -150px;
+        left: -150px;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      .orb-2 {
+        width: 400px;
+        height: 400px;
+        background: var(--accent);
+        bottom: -200px;
+        right: -200px;
+        animation: float 8s ease-in-out infinite reverse;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+
+      .navbar {
+        background: rgba(0, 0, 0, 0.9);
+        border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+        position: fixed;
+        top: 0;
+        z-index: 50;
+        width: 100%;
+        backdrop-filter: blur(12px);
+        padding: 1rem;
+      }
+
+      .nav-container {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        z-index: 2;
+      }
+
+      .logo-text {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary);
+        text-shadow: var(--neon-glow);
+        text-decoration: none;
+      }
+      .anon-text {
+        margin-top: 100px;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        z-index: 2;
+      }
+
+      .nav-link {
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        position: relative;
+      }
+
+      .nav-link:hover {
+        color: var(--primary);
+        text-shadow: var(--neon-glow);
+      }
+
+      main {
+        flex: 1;
+        z-index: 2;
+        max-width: 1280px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        color: var(--primary);
+        text-shadow: var(--neon-glow);
+        margin-bottom: 2rem;
+      }
+
+      .form-container {
+        background: var(--surface-dark);
+        color: var(--text);
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(188, 19, 254, 0.2);
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      input[type="text"],
+      textarea {
+        width: 100%;
+        padding: 1rem;
+        border: 1px solid var(--input-border);
+        border-radius: 5px;
+        background-color: var(--input-background);
+        color: var(--text);
+        transition: border 0.3s;
+        margin-top: 1rem;
+        resize: none;
+      }
+
+      input[type="text"]:focus,
+      textarea:focus {
+        border: 1px solid var(--primary);
+        outline: none;
+      }
+
+      button[type="submit"] {
+        background: var(--primary);
+        color: black;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 1rem;
+        text-transform: uppercase;
+      }
+
+      button[type="submit"]:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--neon-glow);
+      }
+
+      .answer-box {
+        background: var(--surface-dark);
+        color: var(--text);
+        padding: 1.5rem;
+        border-radius: 10px;
+        margin-top: 2rem;
+        max-width: 600px;
+        margin: 2rem auto;
+        box-shadow: 0 0 20px rgba(255, 0, 255, 0.2);
+      }
+
+      footer {
+        background: rgba(0, 0, 0, 0.9);
+        padding: 1rem 0;
+        text-align: center;
+        color: var(--text-secondary);
+        border-top: 1px solid rgba(0, 255, 136, 0.1);
+        z-index: 50;
+      }
+
+      footer a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      footer a:hover {
+        text-shadow: var(--neon-glow);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="background-animation"></div>
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo-container">
+          <a href="{% url 'home' %}">
+            <span class="logo-text">VetPrognosis</span>
+          </a>
+        </div>
+        <div class="nav-links">
+          <a href="#about" class="nav-link">About</a>
+          <a href="#contact" class="nav-link">Contact</a>
+          <a href="#help" class="nav-link">Help</a>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <div class="anon-text">
+        <h1>Anon AI</h1>
+      </div>
+      <div class="form-container">
+        <form method="POST" id="chat-form">
+          {% csrf_token %} {{ form.as_p }}
+          <button type="submit">Ask</button>
+        </form>
+      </div>
+
+      <div id="answer-box" class="answer-box" style="display: none">
+        <p id="answer"></p>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; Anon Ai</p>
+      <p>Developed by <a href="#">Anon</a></p>
+    </footer>
+
+    <script>
+      document.getElementById("chat-form").onsubmit = async function (e) {
+        e.preventDefault();
+
+        const form = new FormData(this);
+        const response = await fetch("", {
+          method: "POST",
+          body: form,
+        });
+
+        const data = await response.json();
+        document.getElementById("answer").innerText = data.answer;
+        document.getElementById("answer-box").style.display = "block";
+      };
+    </script>
+  </body>
+</html>

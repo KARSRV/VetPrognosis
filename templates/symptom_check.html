@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cow Disease Symptom Checker</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #bc13fe;
+        --primary-dark: #39254d;
+        --secondary: #666666;
+        --accent: #ff00ff;
+        --background: #000000;
+        --surface: #111111;
+        --surface-dark: #0a0a0a;
+        --text: #ffffff;
+        --text-secondary: #888888;
+        --neon-glow: 0 0 10px #bc13fe, 0 0 20px #39254d,
+          0 0 30px rgba(0, 255, 136, 0.1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: var(--background);
+        color: var(--text);
+        line-height: 1.5;
+        min-height: 100vh;
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      .main-container {
+        padding-top: 100px;
+        position: relative;
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+      }
+
+      .page-header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .page-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 1rem;
+        text-shadow: var(--neon-glow);
+      }
+
+      .symptom-form {
+        background: rgba(17, 17, 17, 0.95);
+        backdrop-filter: blur(12px);
+        border-radius: 1rem;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(0, 255, 136, 0.1);
+        padding: 2rem;
+        animation: slideUp 0.5s ease-out;
+      }
+
+      .symptoms-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 2 columns */
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .symptom-item {
+        background: rgba(0, 0, 0, 0.6);
+        border-radius: 0.5rem;
+        padding: 1rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: 1px solid rgba(0, 255, 136, 0.1); /* No glow initially */
+        display: flex;
+        align-items: center;
+        box-shadow: none; /* Remove glow by default */
+      }
+
+      .symptom-item:hover {
+        border-color: var(--primary);
+      }
+
+      .symptom-checkbox {
+        display: none;
+      }
+
+      .symptom-label {
+        font-weight: 500;
+        color: var(--text);
+        margin-left: 0.75rem;
+        transition: box-shadow 0.3s ease; /* Add transition for glow */
+      }
+      .symptom-item:hover {
+        box-shadow: var(--neon-glow); /* Add glow only on hover */
+      }
+
+      .custom-checkbox {
+        width: 1.25rem;
+        height: 1.25rem;
+        border: 2px solid var(--secondary);
+        border-radius: 0.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+      }
+
+      .symptom-checkbox:checked + .symptom-label {
+        background-color: var(--surface-dark);
+        box-shadow: var(--neon-glow);
+      }
+
+      .symptom-checkbox:checked + .symptom-label .custom-checkbox::after {
+        content: "✓";
+        color: black;
+        font-size: 0.875rem;
+      }
+
+      .submit-button {
+        background: var(--primary);
+        color: black;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: block;
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: var(--neon-glow);
+      }
+
+      .submit-button:hover {
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: var(--neon-glow);
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .symptoms-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="main-container">
+      <header class="page-header">
+        <h1 class="page-title">Cow Disease Symptom Checker</h1>
+      </header>
+
+      <form method="post" class="symptom-form">
+        {% csrf_token %}
+        <div class="symptoms-grid">
+          {% for checkbox in form.symptoms %}
+          <div class="symptom-item">
+            <div class="custom-checkbox">{{ checkbox.tag }}</div>
+            <label
+              for="{{ checkbox.id_for_label }}"
+              class="symptom-label cursor-pointer"
+            >
+              {{ checkbox.choice_label }}
+            </label>
+          </div>
+          {% endfor %}
+        </div>
+
+        <button type="submit" class="submit-button">Check Disease</button>
+      </form>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Disease Prediction Result</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #bc13fe;
+        --primary-dark: #39254d;
+        --secondary: #666666;
+        --accent: #ff00ff;
+        --background: #000000;
+        --surface: #111111;
+        --surface-dark: #0a0a0a;
+        --text: #ffffff;
+        --text-secondary: #888888;
+        --neon-glow: 0 0 10px #bc13fe, 0 0 20px #39254d,
+          0 0 30px rgba(0, 255, 136, 0.1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: var(--background);
+        color: var(--text);
+        line-height: 1.5;
+        min-height: 100vh;
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      .background-animation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 0;
+        background: linear-gradient(
+          45deg,
+          rgba(0, 255, 136, 0.05),
+          rgba(255, 0, 255, 0.05),
+          rgba(0, 136, 255, 0.05)
+        );
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+      }
+
+      h1 {
+        text-align: center;
+        color: var(--primary);
+        margin: 2rem 0;
+        text-shadow: var(--neon-glow);
+      }
+
+      .result-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 12rem;
+        margin-right: 12rem;
+        margin-bottom: 12rem;
+
+        padding: 1.5rem;
+        border: 2px solid black;
+        border-radius: 0.5rem;
+        box-shadow: var(--neon-glow);
+        transition: box-shadow 0.3s ease;
+      }
+
+      p {
+        text-align: center;
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+      }
+
+      strong {
+        color: var(--primary);
+      }
+
+      a {
+        display: block;
+        text-align: center;
+        padding: 0.75rem 1.5rem;
+        background: var(--primary);
+        color: black;
+        text-decoration: none;
+        border-radius: 0.5rem;
+        transition: all 0.3s ease;
+        margin-top: 1rem;
+        box-shadow: var(--neon-glow);
+      }
+
+      a:hover {
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: var(--neon-glow);
+      }
+
+      .result-container:hover {
+        box-shadow: 0 0 10px #bc13fe, 0 0 20px #39254d,
+          0 0 30px rgba(0, 255, 136, 0.3);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background-animation"></div>
+
+    <h1 style="padding-top: 100px">Cow Disease Prediction</h1>
+    <div class="result-container">
+      <p>The predicted disease is: <strong>{{ predicted_disease }}</strong></p>
+      <div>
+        <a href="{% url 'symptom_check_cow' %}">Go Back</a>
+      </div>
+    </div>
+  </body>
+</html>

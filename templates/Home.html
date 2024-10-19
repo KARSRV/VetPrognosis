@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Page</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #bc13fe;
+        --primary-dark: #39254d;
+        --secondary: #666666;
+        --accent: #ff00ff;
+        --background: #000000;
+        --surface: #111111;
+        --surface-dark: #0a0a0a;
+        --text: #ffffff;
+        --text-secondary: #888888;
+        --neon-glow: 0 0 10px #bc13fe, 0 0 20px #39254d,
+          0 0 30px rgba(0, 255, 136, 0.1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: var(--background);
+        color: var(--text);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+
+      .background-animation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 0;
+        background: linear-gradient(
+          45deg,
+          rgba(0, 255, 136, 0.05),
+          rgba(255, 0, 255, 0.05),
+          rgba(0, 136, 255, 0.05)
+        );
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+      }
+
+      @keyframes gradient {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .glow-orb {
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(100px);
+        opacity: 0.15;
+        z-index: 1;
+      }
+
+      .orb-1 {
+        width: 300px;
+        height: 300px;
+        background: var(--primary);
+        top: -150px;
+        left: -150px;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      .orb-2 {
+        width: 400px;
+        height: 400px;
+        background: var(--accent);
+        bottom: -200px;
+        right: -200px;
+        animation: float 8s ease-in-out infinite reverse;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+
+      .navbar {
+        background: rgba(0, 0, 0, 0.9);
+        border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+        position: fixed;
+        top: 0;
+        z-index: 50;
+        width: 100%;
+        backdrop-filter: blur(12px);
+        padding: 1rem;
+      }
+
+      .nav-container {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        z-index: 2;
+      }
+
+      .logo-text {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary);
+        text-shadow: var(--neon-glow);
+        text-decoration: none;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        z-index: 2;
+      }
+
+      .nav-link {
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        position: relative;
+      }
+
+      .nav-link:hover {
+        color: var(--primary);
+        text-shadow: var(--neon-glow);
+      }
+
+      main {
+        z-index: 2;
+        max-width: 1280px;
+        text-align: center;
+        margin-top: 80px;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+
+      h1 {
+        font-size: 3rem;
+        color: var(--primary);
+        text-shadow: var(--neon-glow);
+      }
+
+      .subtitle {
+        font-size: 1.5rem;
+        color: var(--text);
+        margin-top: 20px;
+        margin-bottom: 10px;
+        animation: fadeIn 1s ease-in forwards;
+        text-shadow: 0 0 5px rgba(188, 19, 254, 0.7),
+          0 0 10px rgba(188, 19, 254, 0.5), 0 0 15px rgba(188, 19, 254, 0.3);
+      }
+
+      .letter {
+        margin-top: 300px;
+        display: inline-block;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: pop 0.5s forwards;
+      }
+
+      @keyframes pop {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .symptom-checker-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1280px;
+        margin: 10px auto;
+        padding: 20px;
+        color: var(--text);
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+        margin-bottom: 300px;
+      }
+
+      .symptom-checker-text {
+        flex: 1;
+        margin-right: 20px;
+        margin-right: 50px;
+      }
+
+      .symptom-checker-image {
+        flex: 1;
+        max-width: 100%;
+        border-radius: 8px;
+      }
+
+      .symptom-checker-button {
+        display: inline-block;
+        background: var(--primary);
+        color: var(--text);
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        text-shadow: var(--neon-glow);
+        margin-top: 20px;
+        box-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary);
+      }
+
+      .symptom-checker-button:hover {
+        background: var(--accent);
+        box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent);
+      }
+
+      .spacer {
+        height: 50vh;
+      }
+
+      .initial-position {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .anon-ai-section {
+        display: flex;
+        align-items: flex-start;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1280px;
+        margin: 30px auto;
+        padding: 20px;
+        color: var(--text);
+        margin-bottom: 300px;
+      }
+
+      .anon-ai-text {
+        flex: 1;
+        margin-right: 20px;
+        text-align: left;
+        margin-left: 50px;
+      }
+
+      .anon-ai-image {
+        flex: 1;
+        width: 500px;
+        height: 300px;
+        border-radius: 8px;
+        margin-right: 30px;
+      }
+
+      .anon-ai-button {
+        display: inline-block;
+        background: var(--primary);
+        color: var(--text);
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        text-shadow: var(--neon-glow);
+        margin-top: 20px;
+        box-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary);
+      }
+
+      .anon-ai-button:hover {
+        background: var(--accent);
+        box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent);
+      }
+
+      .skin-diagnosis-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1280px;
+        margin: 30px auto;
+        padding: 20px;
+        color: var(--text);
+        margin-bottom: 300px;
+        opacity: 1;
+        z-index: 2;
+      }
+
+      .skin-diagnosis-text {
+        flex: 1;
+        margin-right: 100px;
+        text-align: left;
+      }
+
+      .skin-diagnosis-image {
+        flex: 1;
+        max-width: 100%;
+        border-radius: 8px;
+        width: 500px;
+        height: 300px;
+      }
+
+      .skin-diagnosis-button {
+        display: inline-block;
+        background: var(--primary);
+        color: var(--text);
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        text-shadow: var(--neon-glow);
+        margin-top: 20px;
+        box-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary);
+      }
+
+      .skin-diagnosis-button:hover {
+        background: var(--accent);
+        box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent);
+      }
+
+      footer {
+        background: rgba(0, 0, 0, 0.9);
+        padding: 1rem 0;
+        text-align: center;
+        color: var(--text-secondary);
+        border-top: 1px solid rgba(0, 255, 136, 0.1);
+        z-index: 50;
+      }
+
+      footer a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      footer a:hover {
+        text-shadow: var(--neon-glow);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="background-animation"></div>
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="logo-container">
+          <a href="{% url 'home' %}">
+            <span class="logo-text">VetPrognosis</span>
+          </a>
+        </div>
+        <div class="nav-links">
+          <a href="#about" class="nav-link">About</a>
+          <a href="#contact" class="nav-link">Contact</a>
+          <a href="#help" class="nav-link">Help</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="initial-position">
+      <h1>
+        <span class="letter">V</span>
+        <span class="letter">e</span>
+        <span class="letter">t</span>
+        <span class="letter"> </span>
+        <span class="letter">P</span>
+        <span class="letter">r</span>
+        <span class="letter">o</span>
+        <span class="letter">g</span>
+        <span class="letter">n</span>
+        <span class="letter">o</span>
+        <span class="letter">s</span>
+        <span class="letter">i</span>
+        <span class="letter">s</span>
+      </h1>
+      <div class="subtitle">Diagnosis done at ease</div>
+    </main>
+
+    <div class="spacer"></div>
+
+    <div class="symptom-checker-section">
+      <div class="symptom-checker-text">
+        <h2>List the symptoms and obtain the diagnosis with:</h2>
+        <a href="{% url 'symptom_check' %}" class="symptom-checker-button"
+          >Symptom Checker</a
+        >
+      </div>
+      <img
+        src="static/images/dog.jpg"
+        alt="Symptom Checker"
+        class="symptom-checker-image"
+      />
+    </div>
+
+    <div class="anon-ai-section">
+      <img src="static/images/Ai.webp" alt="Anon AI" class="anon-ai-image" />
+      <div class="anon-ai-text">
+        <h2>Anon AI, Gen AI for all your cattle's needs:</h2>
+        <a href="{% url 'chat' %}" class="anon-ai-button">Anon AI</a>
+      </div>
+    </div>
+
+    <div class="skin-diagnosis-section">
+      <div class="skin-diagnosis-text">
+        <h2>Upload and Diagnose Skin Disease</h2>
+        <a href="{% url 'upload_image' %}" class="skin-diagnosis-button">
+          Skin Diagnosis
+        </a>
+      </div>
+      <img
+        src="\static\images\golddog.jpg"
+        alt="Skin Diagnosis"
+        class="skin-diagnosis-image"
+      />
+    </div>
+
+    <div class="skin-diagnosis-section">
+      <img
+        src="\static\images\cow.jpg"
+        alt="Cow Symptom Checker"
+        class="skin-diagnosis-image"
+        style="margin-right: 150px"
+      />
+      <div class="skin-diagnosis-text">
+        <h2>Check Cow Symptoms</h2>
+        <a href="{% url 'symptom_check_cow' %}" class="skin-diagnosis-button">
+          Cow Symptom Checker
+        </a>
+      </div>
+    </div>
+    <footer>
+      <p>&copy; VetPrognosis</p>
+      <p>Developed by <a href="#">Anon</a></p>
+    </footer>
+
+    <script>
+      const letters = document.querySelectorAll(".letter");
+      letters.forEach((letter, index) => {
+        letter.style.animationDelay = `${index * 0.1}s`;
+      });
+
+      window.addEventListener("scroll", () => {
+        const section = document.querySelector(".symptom-checker-section");
+        const anonSection = document.querySelector(".anon-ai-section");
+        const skinDiagnosisSection = document.querySelector(
+          ".skin-diagnosis-section"
+        );
+        const scrollPosition = window.scrollY + window.innerHeight;
+
+        const sectionOffsetTop = section.offsetTop;
+        const anonOffsetTop = anonSection.offsetTop;
+        const skinDiagnosisOffsetTop = skinDiagnosisSection.offsetTop;
+
+        if (scrollPosition > sectionOffsetTop) {
+          section.style.opacity = 1;
+          section.style.transform = "translateY(0)";
+        }
+
+        if (scrollPosition > anonOffsetTop) {
+          anonSection.style.opacity = 1;
+          anonSection.style.transform = "translateY(0)";
+        }
+
+        if (scrollPosition > skinDiagnosisOffsetTop) {
+          skinDiagnosisSection.style.opacity = 1;
+          skinDiagnosisSection.style.transform = "translateY(0)";
+        }
+      });
+    </script>
+  </body>
+</html>
