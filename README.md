@@ -23,9 +23,9 @@ Welcome to the **Animal Disease Prediction Application**! This Django-based web 
 
 ## 🛠️ Usage
 ### Cow Disease Prediction
-Navigate to the cow symptom checker page.
-Select symptoms your cow is exhibiting.
-Submit the form to receive a predicted disease based on the selected symptoms using a voting classifier.
+- Navigate to the cow symptom checker page.
+- Select symptoms your cow is exhibiting.
+- Submit the form to receive a predicted disease based on the selected symptoms using a voting classifier.
 ### Dog Skin Disease Diagnosis
 Go to the dog image upload page.
 Upload an image of your dog.
