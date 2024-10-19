@@ -1,0 +1,11 @@
+Python 3.10.0
+Django
+scikit-learn
+TensorFlow
+pandas
+langchain
+langchain_community
+langchain-community
+OpenAi
+openai
+chromadb
