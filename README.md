@@ -36,7 +36,9 @@ To run this application, you need the following software:
 - openai
 
 ---
-
+##  Datasets (only datasets were taken from these github projects)
+https://github.com/thyagarajank/Cattle-disease-prediction-using-Machine-Learning/tree/main/Dataset
+https://github.com/OPet-OnlineDiagnosisforYourPet-sDisease/MachineLearning/tree/main/dataset
 
 
 
