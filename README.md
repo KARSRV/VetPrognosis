@@ -1,5 +1,6 @@
 # VetPrognosis- A ML Based Disease Detection in Dogs, Cattle etc.
-Ml Matrix Project Submission (Team Anon). Project is Working all screenshots in (screenshots bms)
+Ml Matrix Project Submission (Team Anon). Project is Working all screenshots in (screenshots bms) 
+Tutorial of the application https://youtu.be/0J33ZyhQaD0
 # 🐄 Animal Disease Prediction Application
 
 Welcome to the **Animal Disease Prediction Application**! This Django-based web application assists farmers and pet owners in predicting diseases in cows,dogs,cats and goats based on symptoms and uploaded images. It features advanced machine learning models, including a Voting Classifier for cows and a CNN model for dog skin diseases, as well as a Retrieval-Augmented Generation (RAG) model that provides answers based on a specified PDF document which is loaded to the llm model using vector embeddings.
